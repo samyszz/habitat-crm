@@ -1,96 +1,55 @@
-import React from 'react';
-import { Heart } from 'lucide-react';
+import { Search, Heart, Phone, Mail } from 'lucide-react';
 
-const sampleAdopters = [
-  { id: 1, name: 'Mariana', city: 'Curitiba' },
-  { id: 2, name: 'Carlos', city: 'São Paulo' },
-  { id: 3, name: 'Ana', city: 'Recife' },
-];
-
-export default function Adotantes({ onNewAdotante }: { onNewAdotante?: () => void }) {
-  const [openProfile, setOpenProfile] = React.useState(false);
-  const [selected, setSelected] = React.useState<number | null>(null);
-
-  function openFor(id: number) {
-    setSelected(id);
-    setOpenProfile(true);
-  }
+export default function Adotantes() {
+  const adotantes = [
+    { id: 1, nome: "Ana Clara", status: "Em processo", animal: "Pipoca", contato: "(11) 9999-9999" },
+    { id: 2, nome: "Jorge Silva", status: "Aprovado", animal: "-", contato: "(21) 8888-8888" },
+    { id: 3, nome: "Mariana Luz", status: "Adotou", animal: "Thor", contato: "mari@email.com" },
+  ];
 
   return (
-    <div className="space-y-6">
-      <header className="flex items-center justify-between">
-        <h2 className="text-2xl font-display font-bold text-primary">Adotantes</h2>
-        <div className="flex items-center gap-3">
-          <button onClick={onNewAdotante} className="pill-btn bg-accent-green text-white">Novo Adotante</button>
+    <div className="space-y-6 animate-fadeIn">
+      {/* Header */}
+      <div className="flex justify-between items-center bg-white p-4 rounded-3xl shadow-soft">
+        <h2 className="text-2xl font-display font-bold text-primary pl-2">Famílias & Adotantes ❤️</h2>
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+          <input type="text" placeholder="Buscar..." className="pl-10 pr-4 py-2 rounded-full bg-background border-none focus:ring-2 focus:ring-accent-orange/50" />
         </div>
-      </header>
+      </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {sampleAdopters.map((a) => (
-          <div key={a.id} className="card flex items-center gap-4">
-            <div className="w-12 h-12 rounded-full bg-accent-yellow/30 flex items-center justify-center">
-              <Heart size={20} className="text-accent-orange" />
-            </div>
-            <div>
-              <div className="font-display font-bold text-lg text-primary">{a.name}</div>
-              <div className="text-sm text-secondary">{a.city}</div>
-              <div className="mt-2 text-xs uppercase font-bold tracking-wide">
-                <span className="inline-flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-yellow-400 block"></span>
-                  Em análise
-                </span>
+      {/* Grid de Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {adotantes.map((pessoa) => (
+          <div key={pessoa.id} className="bg-white p-6 rounded-3xl shadow-soft hover:shadow-hover transition-all border border-transparent hover:border-accent-yellow/30">
+            <div className="flex justify-between items-start mb-4">
+              <div className="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center text-accent-orange font-bold text-xl">
+                {pessoa.nome.charAt(0)}
               </div>
+              <span className={`px-3 py-1 rounded-full text-xs font-bold ${
+                pessoa.status === 'Adotou' ? 'bg-status-green text-white' : 
+                pessoa.status === 'Aprovado' ? 'bg-status-blue text-white' : 'bg-yellow-100 text-yellow-700'
+              }`}>
+                {pessoa.status.toUpperCase()}
+              </span>
             </div>
-            <div className="ml-auto flex flex-col items-end gap-2">
-              <button onClick={() => openFor(a.id)} className="text-sm font-bold text-accent-orange">Ver Cadastro</button>
-              <div className="text-sm text-secondary">#{a.id}</div>
+            
+            <h3 className="font-bold text-lg text-primary">{pessoa.nome}</h3>
+            <p className="text-sm text-secondary mb-4 flex items-center gap-1">
+              Interesse: <span className="font-bold text-accent-orange">{pessoa.animal}</span>
+            </p>
+
+            <div className="flex gap-2 mt-4 pt-4 border-t border-gray-100">
+              <button className="flex-1 py-2 rounded-xl bg-background hover:bg-orange-50 text-secondary hover:text-accent-orange transition-colors flex justify-center">
+                <Phone size={18} />
+              </button>
+              <button className="flex-1 py-2 rounded-xl bg-background hover:bg-orange-50 text-secondary hover:text-accent-orange transition-colors flex justify-center">
+                <Mail size={18} />
+              </button>
             </div>
           </div>
         ))}
       </div>
-
-      {openProfile && selected !== null && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/30" onClick={() => setOpenProfile(false)} />
-          <div className="relative bg-white rounded-2xl w-full max-w-2xl p-6 shadow-soft z-10">
-            <div className="flex items-start gap-6">
-              <div className="w-20 h-20 rounded-full bg-accent-yellow/30 flex items-center justify-center">A</div>
-              <div>
-                <h3 className="text-xl font-display font-bold text-primary">{sampleAdopters.find(s => s.id === selected)?.name}</h3>
-                <div className="text-sm text-secondary">{sampleAdopters.find(s => s.id === selected)?.city}</div>
-
-                <div className="mt-4 space-y-3">
-                  <div>
-                    <div className="text-sm font-bold text-secondary">Dados Pessoais</div>
-                    <div className="mt-1">Endereço fictício • contato@exemplo.com • (41) 99999-0000</div>
-                  </div>
-
-                  <div>
-                    <div className="text-sm font-bold text-secondary">Questionário</div>
-                    <div className="mt-1">Possui experiência com animais: Sim • Tipo de moradia: Casa</div>
-                  </div>
-
-                  <div>
-                    <div className="text-sm font-bold text-secondary">Histórico de Adoções</div>
-                    <div className="mt-1">Nenhum registro</div>
-                  </div>
-
-                  <div>
-                    <div className="text-sm font-bold text-secondary">Status do Processo</div>
-                    <div className="mt-1">Em análise</div>
-                  </div>
-                </div>
-
-                <div className="mt-4 flex gap-3 justify-end">
-                  <button onClick={() => setOpenProfile(false)} className="px-4 py-2 rounded-md border">Fechar</button>
-                  <button className="px-4 py-2 rounded-md bg-accent-green text-white">Aprovar</button>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

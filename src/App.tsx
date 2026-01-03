@@ -15,12 +15,6 @@ import {
 import { AreaChart, Area, ResponsiveContainer } from 'recharts';
 import Acolhidos from './pages/Acolhidos';
 import Adotantes from './pages/Adotantes';
-import VetSaude from './pages/VetSaude';
-import Financeiro from './pages/Financeiro';
-import Modal from './components/Modal';
-import RescueForm from './components/RescueForm';
-import AcolhidoForm from './components/AcolhidoForm';
-import AdotanteForm from './components/AdotanteForm';
 
 // Dados simulados para o gráfico de ondas
 const chartData = [
@@ -35,9 +29,6 @@ const chartData = [
 
 function App() {
   const [activeTab, setActiveTab] = useState('Dashboard');
-  const [openRescue, setOpenRescue] = useState(false);
-  const [openAcolhido, setOpenAcolhido] = useState(false);
-  const [openAdotante, setOpenAdotante] = useState(false);
 
   return (
     <div className="min-h-screen bg-background p-6 md:p-8 font-sans selection:bg-accent-orange selection:text-white">
@@ -101,14 +92,10 @@ function App() {
                   </p>
                 </div>
                 
-              <button onClick={() => setOpenRescue(true)} className="pill-btn bg-accent-orange hover:bg-orange-600 text-white text-lg shadow-lg hover:shadow-hover transition-all transform hover:-translate-y-1 active:scale-95 mx-auto md:mx-0">
-                <Plus size={24} strokeWidth={3} />
-                Registrar Novo Resgate
-              </button>
-
-              <Modal open={openRescue} onClose={() => setOpenRescue(false)} title="Registrar Novo Resgate">
-                <RescueForm onClose={() => setOpenRescue(false)} />
-              </Modal>
+                <button className="pill-btn bg-accent-orange hover:bg-orange-600 text-white text-lg shadow-lg hover:shadow-hover transition-all transform hover:-translate-y-1 active:scale-95 mx-auto md:mx-0">
+                  <Plus size={24} strokeWidth={3} />
+                  Registrar Novo Resgate
+                </button>
               </div>
 
               {/* Ilustração (Imagem do cachorrinho) */}
@@ -204,28 +191,12 @@ function App() {
         )}
 
         {activeTab === 'Acolhidos' && (
-          <Acolhidos onOpenAcolhido={() => setOpenAcolhido(true)} />
-        )}
-
-        {activeTab === 'Vet & Saúde' && (
-          <VetSaude />
-        )}
-
-        {activeTab === 'Financeiro' && (
-          <Financeiro />
+          <Acolhidos />
         )}
 
         {activeTab === 'Adotantes' && (
-          <Adotantes onNewAdotante={() => setOpenAdotante(true)} />
+          <Adotantes />
         )}
-
-        <Modal open={openAcolhido} onClose={() => setOpenAcolhido(false)} title="Registrar Acolhido">
-          <AcolhidoForm onClose={() => setOpenAcolhido(false)} />
-        </Modal>
-
-        <Modal open={openAdotante} onClose={() => setOpenAdotante(false)} title="Novo Adotante">
-          <AdotanteForm onClose={() => setOpenAdotante(false)} />
-        </Modal>
       </main>
     </div>
   );
