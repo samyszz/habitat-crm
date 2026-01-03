@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #FDFBF7;
+  color: #6B4A2D;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Estilização da barra de rolagem para ficar sutil */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #E6D5C5;
+  border-radius: 10px;
+}
+
+/* Componentes utilitários personalizados (para replicar o design) */
+@layer components {
+  .card {
+    @apply bg-white rounded-3xl p-6 shadow-soft;
+  }
+
+  .hero-card {
+    @apply bg-white rounded-[32px] p-8 md:p-10 shadow-soft relative overflow-hidden;
+  }
+
+  .pill-btn {
+    @apply rounded-pill px-6 py-2.5 font-bold inline-flex items-center gap-2;
+  }
+
+  .kpi-strip {
+    @apply bg-white rounded-3xl p-3 shadow-soft flex items-center justify-between;
+  }
+
+  .action-bento {
+    @apply h-40 rounded-[32px] p-6 flex flex-col items-center justify-center gap-3 text-white shadow-soft transition-all duration-300;
+  }
+
+  /* Pequeno blob decorativo usado no hero */
+  .decor-blob {
+    position: absolute;
+    right: -6rem;
+    top: -4rem;
+    width: 420px;
+    height: 420px;
+    background: radial-gradient(circle at 30% 30%, rgba(246, 190, 118, 0.18), rgba(230, 120, 23, 0.08));
+    filter: blur(28px);
+    border-radius: 50%;
+    z-index: 0;
+  }
+}
